@@ -1,60 +1,51 @@
-#include "bits/stdc++.h"
+#include <bits/stdc++.h>
 using namespace std;
 
-#define ll long long
-
-#define forn(i, n) for (int i = 0; i < n; i++)
-#define all(v) v.begin(), v.end()
-#define rall(v) v.rbegin(), v.rend()
-
-#define pb push_back
-#define sz(a) (int)a.size()
-
-vector<int> pairs[1001];
-void solve()
+int main()
 {
-  int n;
-  cin >> n;
-  vector<int> id[1001];
-  for (int i = 1; i <= n; ++i)
-  {
-    int x;
-    cin >> x;
-    id[x].push_back(i);
-  }
-  int ans = -1;
-  for (int i = 1; i <= 1000; ++i)
-  {
-    for (int j : pairs[i])
+    int t;
+    cin >> t;
+    while (t--)
     {
-      if (!id[i].empty() && !id[j].empty())
-      {
-        ans = max(ans, id[i].back() + id[j].back());
-      }
+        int n;
+        cin >> n;
+        int a[n];
+        for (int i = 0; i < n; i++)
+        {
+            cin >> a[i];
+        }
+        unordered_map<int, int> m;
+        for (int i = 0; i < n; i++)
+        {
+            m[a[i]] = i + 1;
+        }
+        vector<pair<int, int>> v;
+        for (auto i : m)
+        {
+            v.push_back(make_pair(i.first, i.second));
+        }
+        // for (auto i : v)
+        // {
+        //     cout << i.second << " " << i.first << endl;
+        // }
+        n = v.size();
+        int max = -1;
+        int indexi = 0, indexj = -1;
+        for (int i = 0; i < n; i++)
+        {
+            for (int j = i; j < n; j++)
+            {
+                if (__gcd(v[i].first, v[j].first) == 1 && max < abs(v[i].second + v[j].second))
+                {
+                    // cout << v[i].first << " " << v[j].first << endl;
+                    max = abs(v[i].second + v[j].second);
+                    indexi = v[i].second;
+                    indexj = v[j].second;
+                }
+            }
+            // cout << endl;
+        }
+        v.clear();
+        cout << indexi + indexj << endl;
     }
-  }
-  cout << ans << "\n";
-}
-
-int32_t main()
-{
-  for (int i = 1; i <= 1000; ++i)
-  {
-    for (int j = 1; j <= 1000; ++j)
-    {
-      if (__gcd(i, j) == 1)
-      {
-        pairs[i].push_back(j);
-      }
-    }
-  }
-  ios_base::sync_with_stdio(0);
-  cin.tie(0);
-  cout.tie(0);
-  int t = 1;
-  cin >> t;
-  while (t--)
-  {
-    solve();
-  }
 }

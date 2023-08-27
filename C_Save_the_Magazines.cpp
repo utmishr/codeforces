@@ -1,32 +1,36 @@
 #include <bits/stdc++.h>
 using namespace std;
-
 int main()
 {
-  int t;
-  cin >> t;
-  while (t--)
-  {
-    int n;
-    cin >> n;
-    int a[n][2];
-    for (int i = 0; i < n; i++)
+    ios::sync_with_stdio(0);
+    cin.tie(0);
+    int t;
+    cin >> t;
+    while (t--)
     {
-      cin >> a[i][0];
+        int n;
+        cin >> n;
+        string s;
+        cin >> s;
+        int a[n + 5];
+        for (int i = 1; i <= n; i++)
+            cin >> a[i];
+        priority_queue<int> q;
+        long long ans = 0;
+        for (int i = 1; i <= n; i++)
+        {
+            if (s[i - 1] == '0')
+            {
+                while (!q.empty())
+                    q.pop();
+            }
+            q.push(a[i]);
+            if (s[i - 1] == '1')
+            {
+                ans += q.top();
+                q.pop();
+            }
+        }
+        cout << ans << endl;
     }
-    for (int i = 0; i < n; i++)
-    {
-      cin >> a[i][1];
-    }
-    for (int i = 1; i < n; i++)
-    {
-      if (a[i - 1][1] > a[i][1] && a[i - 1][0] == 0)
-      {
-        int temp = a[i - 1][0];
-        a[i - 1][0] = a[i][0];
-        a[i][0] = temp;
-      }
-      if (a[i - 1][1] < a[i][1])
-    }
-  }
 }

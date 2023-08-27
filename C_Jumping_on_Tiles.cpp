@@ -1,73 +1,81 @@
 #include <bits/stdc++.h>
 using namespace std;
 
+auto customCompare = [](const std::pair<char, int> &a, const std::pair<char, int> &b)
+{
+    if (a.first != b.first)
+    {
+        return a.first > b.first; // Sort char in descending order
+    }
+    else
+    {
+        return a.second < b.second; // Sort int in ascending order
+    }
+};
+
 int main()
 {
-  int t;
-  cin >> t;
-  while (t--)
-  {
-    string s;
-    int count = 0;
-    char a;
-
-    cin >> s;
-    if (s[0] > s[s.length() - 1])
+    int t;
+    cin >> t;
+    while (t--)
     {
-      multimap<char, int, greater<int>> m;
-      for (int i = 0; i < s.length(); i++)
-      {
-        if (s[i] <= s[0] && s[s.length() - 1] <= s[i])
+        string s;
+        cin >> s;
+        int n = s.size();
+        int count = 0;
+        vector<pair<char, int>> v;
+        if (s[0] > s[n - 1])
         {
-          a = s[i];
-          m.insert(pair<char, int>(a, i + 1));
-          count++;
+            for (int i = 0; i < n; i++)
+            {
+                if (s[i] <= s[0] && s[i] >= s[n - 1])
+                {
+                    v.push_back({s[i], i + 1});
+                    count++;
+                }
+            }
+            sort(v.begin(), v.end(), customCompare);
+            cout << s[0] - s[n - 1] << " " << count << endl;
+            for (int i = 0; i < v.size(); i++)
+            {
+                cout << v[i].second << " ";
+            }
+            cout << endl;
         }
-      }
-      cout << s[0] - s[s.length() - 1] << " " << count << endl;
-      for (auto it : m)
-      {
-        cout << it.second << " ";
-      }
-      cout << endl;
-    }
-    if (s[0] < s[s.length() - 1])
-    {
-      multimap<char, int> m;
-      for (int i = 0; i < s.length(); i++)
-      {
-        if (s[i] >= s[0] && s[s.length() - 1] >= s[i])
+        else if (s[0] < s[n - 1])
         {
-          a = s[i];
-          m.insert(pair<char, int>(a, i + 1));
-          count++;
+            for (int i = 0; i < n; i++)
+            {
+                if (s[i] >= s[0] && s[i] <= s[n - 1])
+                {
+                    v.push_back({s[i], i + 1});
+                    count++;
+                }
+            }
+            sort(v.begin(), v.end());
+            cout << s[n - 1] - s[0] << " " << count << endl;
+            for (int i = 0; i < v.size(); i++)
+            {
+                cout << v[i].second << " ";
+            }
+            cout << endl;
         }
-      }
-      cout << s[s.length() - 1] - s[0] << " " << count << endl;
-      for (auto it : m)
-      {
-        cout << it.second << " ";
-      }
-      cout << endl;
-    }
-    if (s[0] == s[s.length() - 1])
-    {
-      multimap<char, int> m;
-      for (int i = 0; i < s.length(); i++)
-      {
-        if (s[i] == s[0])
+        else
         {
-          a = s[i];
-          m.insert(pair<char, int>(a, i + 1));
-          count++;
+            for (int i = 0; i < n; i++)
+            {
+                if (s[i] == s[0])
+                {
+                    v.push_back({s[i], i + 1});
+                    count++;
+                }
+            }
+            cout << 0 << " " << count << endl;
+            for (int i = 0; i < v.size(); i++)
+            {
+                cout << v[i].second << " ";
+            }
+            cout << endl;
         }
-      }
-      cout << s[s.length() - 1] - s[0] << " " << count << endl;
-      for (auto it : m)
-      {
-        cout << it.second << " ";
-      }
-      cout << endl;
     }
-  }
 }
